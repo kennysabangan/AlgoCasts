@@ -18,8 +18,41 @@
 //       '####'
 
 // function steps(n) {
-//     for (let row = 1; row <= n; row++) {
-//         let step = '';
+//     for (let row = 0; row < n; row++) {
+//         let step = ''
+
+//         for (let column = 0; column < n; column++) {
+//             if (column <= row) {
+//                 step += '#';
+//             } else {
+//                 step += ' ';
+//             }
+//         }
+
+//         console.log(step);
+//     }
+// }
+
+function steps(n, row = 0, step='') {
+    // Reach the end of the steps, stop
+    if (row === n) {
+        return;
+    }
+
+    // Reach end of the row, console.log + move to next row
+    if (step.length === n) {
+        console.log(step);
+        return steps(n, row + 1)
+    }
+
+    // Build step
+    if (step.length <= row) {
+        step += '#';
+    } else {
+        step += ' ';
+    }
+    steps(n, row, step);
+}
 
 //         for (let hash = 0; hash < row; hash++) {
 //             step += '#'

@@ -106,21 +106,76 @@ class LinkedList {
     }
 
     removeAt(index) {
-        if (index === 0) {
-            this.removeFirst();
-        }
-
-        if (this.size() - 1 === index) {
-            this.removeLast();
-        }
-
-        if (index > this.size() - 1) {
+        if (!this.head) {
             return;
         }
 
-        let node = this.getAt(index - 1);
-        if (node.next) {
+        if (index === 0) {
+            this.head = this.head.next;
+            return;
+        }
 
+        let previous = this.getAt(index - 1);
+        // Handles edge case in which index is negative
+        if (!previous) {
+            return;
+        }
+
+        // Handles edge case in which we are getting an index out of bounds by +1
+        if (!previous.next) {
+            return;
+        }
+        previous.next = previous.next.next;
+    }
+
+    insertAt(data, index) {
+        let node = new Node(data);
+
+        // Adding to an empty list
+        if (!this.head) {
+            this.head = node;
+            return;
+        }
+
+        // Inserting at index 0
+        if (index === 0) {
+            this.insertFirst(data);
+            return;
+        }
+
+        let previous = this.getAt(index - 1);
+        // Adding with index out of bounds
+        if (!previous) {
+            this.insertLast(data);
+            return;
+        }
+
+        // Inserting to end of list
+        if (!previous.next) {
+            this.insertLast(data);
+            return;
+        }
+
+        // Inserting in the middle of list
+        node.next = previous.next;
+        previous.next = node;
+    }
+
+    forEach(fn) {
+        let node = this.head;
+        let counter = 0;
+        while (node) {
+            fn(node, counter);
+            node = node.next;
+            counter++;
+        }
+    }
+
+    *[Symbol.iterator]() {
+        let node = this.head;
+        while (node) {
+            yield node;
+            node = node.next;
         }
     }
 }

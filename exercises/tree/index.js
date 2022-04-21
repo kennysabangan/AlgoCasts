@@ -28,9 +28,11 @@ class Node {
 }
 
 class Tree {
-    constructor(data, children = []) {
-
+    constructor() {
+        this.root = null;
     }
+
+
 }
 
 module.exports = { Tree, Node };
